@@ -1,0 +1,23 @@
+{% extends 'system_base.html' %}
+
+{% block css%}
+   <link href="/static/css/jquery-ui.css" rel="stylesheet" type="text/css">
+   <script type="text/javascript" src="/static/js/jQuery/jquery-1.9.1.js"></script>
+   <script type="text/javascript" src="/static/js/jQuery/jquery-ui.js"></script>
+{% endblock %}
+
+{% load bootstrap3 %}
+
+{% block navbar_li %}
+   
+	<li {% if page == "view_student" %} class="active" {% endif %}>
+	  <a href="/registration/searchRegStud">Student</a></li>
+	<li {% if page == "reg_form" %} class="active" {% endif %}><a href="/registration/regStud">Registration Form</a></li>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="/static/js/input_validator.js"></script>	
+	<script type="text/javascript" src="/static/js/registration.js"></script>
+{% endblock%}
+
+

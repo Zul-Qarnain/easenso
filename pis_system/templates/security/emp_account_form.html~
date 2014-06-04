@@ -1,0 +1,29 @@
+{% load bootstrap3 %}
+<div id="emp_form">
+<h3 id="emp_form_hdr" style="padding-top: 10px;padding-left: 20px;padding-bottom: 10px;border-bottom: 1px solid;">
+   {% if action == 'add' %}
+   New Employee Account
+   {% else %}
+   Update Employee Account
+   {% endif %}
+  </h3>
+
+
+<form action="{% if action == 'add' %} /registration/add_employee {% else %} /registration/update_employee {% endif %}" method="post" role="form" enctype="multipart/from-data">{% csrf_token %}
+  <div style="position: relative;left: 20px;top:5px; width: 80%;">
+     {% bootstrap_form empform %}
+     <div class="form-group">
+        <label>Account Privilege</label>
+	<select name="grp_perm" class="form-control">
+	  {% for perm in grp_perms %}
+          <option value="{{ perm.id }}">{{ perm.name }}</option>
+	  {% endfor %}
+	</select>
+     </div>
+
+     {% bootstrap_form formpic %}
+  
+     <button type="submit" class="btn btn-success"> Submit </button>
+  </div>
+</form>
+</div>

@@ -1,0 +1,119 @@
+ 
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="form-horizontal" action="/registration/editStudentInfo/{{student.studentID}}/" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Edit Student Information</h4>
+      </div>
+      <div class="modal-body">
+        <div class="media">
+        	<img style="border: 1px solid grey;" class="media-object" src="{{MEDIA_URL}}{{student.image_path}}" width="200" height="200" />
+        </div>
+        <div class="caption">
+        	<h3>ID Number : {{ student.studentID }}</h3>
+            <br />
+            <table class="table table-condensed table-striped">
+            	<tr>
+            		<td><label>Firstname:</label></td>
+            		<td>
+            			<input name="firstname" type="text" class="form-control" value="{{ student.firstname}}" />
+            		</td>
+            	</tr>
+            	<tr>
+            		<td><label>Middle Initial:</label></td>
+            		<td>
+            			<input name="mi" type="text" class="form-control" value="{{ student.mi | upper }}" />
+            		</td>
+            	</tr>
+            	<tr>
+            		<td><label>Lastname:</label></td>
+            		<td>
+            			<input name="lastname" type="text" class="form-control" value="{{ student.lastname }}" />
+            		</td>
+            	</tr>
+            	<tr>
+            		<td><label>Academic Status:</label></td>
+            		<td>
+            			<select name="acad_status" class="form-control">
+            				<option {% if student.acad_status == 'R' %} selected="" {%endif%} value="R">Regular</option>
+            				<option {% if student.acad_status == 'I' %} selected="" {%endif%} value="I">Irregular</option>
+            				<option {% if student.acad_status == 'T' %} selected="" {%endif%} value="T">Transferee</option>
+            			</select>
+            		</td>
+            	</tr>
+            	<tr>
+            		<td><label>Privilege/Scholarship:</label></td>
+            		<td><input name="privilege" type="text" class="form-control" value="{{ student.privilege }}" />
+            			
+            		</td>
+            	</tr>
+            	<tr>
+            		<td><label>Year Level:</label></td>
+            		<td>
+            			<select name="year_level" class="form-control">
+            				<option {% if student.year_level == 1 %} selected="" {% endif %} value="1">Nursery</option>
+            				<option {% if student.year_level == 2 %} selected="" {% endif %} value="2">Kinder 1</option>
+            				<option {% if student.year_level == 3 %} selected="" {% endif %} value="3">Kinder 2</option>
+            				<option {% if student.year_level == 4 %} selected="" {% endif %} value="4">Grade 1</option>
+            				<option {% if student.year_level == 5 %} selected="" {% endif %} value="5">Grade 2</option>
+            				<option {% if student.year_level == 6 %} selected="" {% endif %} value="6">Grade 3</option>
+            				<option {% if student.year_level == 7 %} selected="" {% endif %} value="7">Grade 4</option>
+            				<option {% if student.year_level == 8 %} selected="" {% endif %} value="8">Grade 5</option>
+            				<option {% if student.year_level == 9 %} selected="" {% endif %} value="9">Grade 6</option>
+            				<option {% if student.year_level == 10 %} selected="" {% endif %} value="10">Grade 7</option>
+            				<option {% if student.year_level == 11 %} selected="" {% endif %} value="11">Grade 8</option>
+            				<option {% if student.year_level == 12 %} selected="" {% endif %} value="12">1st Year Junior</option>
+            				<option {% if student.year_level == 13 %} selected="" {% endif %} value="13">2nd Year Junior</option>
+            				<option {% if student.year_level == 14 %} selected="" {% endif %} value="14">1st Year Senior</option>
+            				<option {% if student.year_level == 15 %} selected="" {% endif %} value="15">2nd Year Senior</option>
+            			</select>
+            		</td>
+            		
+            	</tr>
+            	<tr>
+            		<td><label>Gender:</label></td>
+            		<td>
+            			<select name="gender" class="form-control">
+            				<option {% if student.gender == 'M' %} selected="" {% endif %} value="M">Male</option>
+            				<option {% if student.gender == 'F' %} selected="" {% endif %} value="F">Female</option>
+            			</select>
+            		</td>
+            	</tr>
+            	<!--tr>
+            		<td><label>Date of Birth:</label></td>
+            		<td><input name="date_of_birth" id="id_date_of_birth" class="form-control" type="text" value="{{ student.date_of_birth }}" /></td>
+            	</tr-->		
+            	<tr>
+            		<td><label>Father's Name:</label></td>
+            		<td><input name="father_name" class="form-control" type="text" value="{{ student.father_name }}" /></td>
+            	</tr>
+            	<tr>
+            		<td><label>Mother's Name:</label></td>
+            		<td><input name="mother_name" class="form-control" type="text" value="{{ student.mother_name }}" /></td>
+            	</tr>
+            	<!--tr>
+            		<td><label>Date Admitted:</label></td>
+            		<td><input name="date_admitted" id="id_date_admitted" class="form-control" type="text" value="{{ student.date_admitted }}" /></td>
+            	</tr-->
+            	<tr>
+            		<td><label>Previous School:</label></td>
+            		<td><input name="prev_school" class="form-control" type="text" value="{{ student.last_school_att }}" /></td>
+            	</tr>
+            	<tr>
+            		<td><label>Previous School Address:</label></td>
+            		<td><input name="prev_school_address" class="form-control" type="text" value="{{ student.last_school_att_address }}" /></td>
+            	</tr>
+            </table>
+	  	</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" value="Save changes">
+      </div>
+     </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

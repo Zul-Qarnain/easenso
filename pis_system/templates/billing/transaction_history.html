@@ -1,0 +1,26 @@
+
+  {% if transactions %}
+    <table class="table table-hover table-condensed" style="max-height:480px; overflow:auto">
+      <thead>
+        <strong>Transaction History</strong>
+        <th style="min-width:300px">Date</th>
+        <th style="text-align:right">Amount Due</th>
+      </thead>
+      <tbody>  
+
+        {% for transaction in transactions %}
+          <tr id="{{ transaction.id }}" style="cursor:pointer" onclick="javascript:getItemHistory({{ transaction.id }})">
+
+            <td>{{ transaction.date_transacted }}</td>
+            <td style="text-align:right">{{  transaction.amount_due }}</td>
+          </tr> 
+        {% endfor %}
+
+      </tbody>
+    </table>
+  {% else %}
+    <h2>No transaction history</h2>
+    <h4>This student has not yet transacted with PIS.</h4>
+  {% endif %}
+
+{% include 'billing/receipt.html' %}

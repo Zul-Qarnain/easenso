@@ -1,0 +1,60 @@
+
+  {% if transactions %}
+
+    <table class="table table-hover table-condensed" style="max-height:480px; overflow:auto">
+      <thead>
+        <th>
+          <input  type="hidden" id="check_all_bills" name="student_bills[]" checked value="{{ transaction.bill_account_id.bill_item_name.id}}"/>
+        </th>
+        <th style="min-width:300px">Item</th>
+        <th style="text-align:right">Amount</th>
+      </thead>
+      <tbody>  
+
+        {% for transaction in transactions %}
+          <tr>
+
+            {% if transaction.bill_account_id.bill_item_name.item_type == 'T' %}
+                <input type="hidden" id="Tuition"  value="{{transaction.bill_account_id.bill_item_name}}" />
+                <input type="hidden" id="Tuition_amount"  value="{{transaction.bill_account_id.balance}}" />
+                 <input type="hidden" id="Tuition_id"  value="{{transaction.bill_account_id.bill_item_name.id}}" />
+
+            {% endif %}
+            
+            <td><input  type="hidden" id="bill_picker" data-value="{{  transaction.bill_account_id.amount }}" data-item="{{ transaction.bill_account_id.bill_item_name}}" checked name="student_bills[]" value="{{ transaction.bill_account_id.id}}" class="bill_picker"/></td>    
+            <td>{{ transaction.bill_account_id.bill_item_name }}</td>
+            <td style="text-align:right">{{  transaction.bill_account_id.amount }}</td>
+             
+          </tr> 
+        {% endfor %}
+      </tbody>
+    </table>
+    {% if total %}
+    <table class="table table-condensed" style="margin-bottom:2px">
+      <tbody>
+          <tr>
+            <input id="all_total" name="all_total" type="hidden" value="{{ total.amount_due }}" />
+            <td style="min-width:300px"><h4>Total</h4></td>
+            <td style="text-align:right"><h4 style="padding: 0; color: #790000" id="total" name="total">{{ total.amount_due }}</h4></td>
+          </tr>
+
+      </tbody>
+    </table>
+    {% endif %}
+    <form method="POST" id="transaction_form" action="javascript:print()">
+      {% csrf_token %}
+      <button id="transact" data-loading-text="Processing Transaction" class="btn btn-success btn-lg" style="width:100%; margin-top:10px">Print</button>
+    </form>
+  {% else %}
+  <h1>This student currently has no bills.</h1>
+  <h3>
+    If this student is supposed to have bills,<br>consult your supervisor.
+    <button type="button" id="add_bill_button" data-toggle="modal" data-target="#add_bill" class="btn btn-success">Bill this student</button>
+  </h3>
+  <a id="{{studentID}}" href="javascript:getHistoryTransaction({{total.student}})" class="btn btn-default btn-small ">
+        <strong>Transaction History</strong>
+      </a>
+      
+  {% endif %}
+
+{% include 'billing/receipt.html' %}

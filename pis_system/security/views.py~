@@ -1,0 +1,401 @@
+from django.db import connection
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, render_to_response, RequestContext
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import *
+from .forms import *
+from pis_system.forms import ItemSearch, LogInForm
+from pis_system.models import Employee, Student
+from pis_objects.student import *
+from pis_objects.employee import *
+from helpers.helpers import *
+
+
+'''
+  new employee views here for security module
+'''
+SYSTEM_NAME = 'Security Module'
+def loginForm(request):
+    context = {'system_name': 'Security',
+               'action_url': 'validate_user',
+               'form': LogInForm(),
+               'valid': request.GET.get('valid', 'none'),
+               'has_access': request.GET.get('has_access', 'none')
+    }
+    return render(request, 'login.html', context)
+    
+
+def validateUserLogin(request):
+    cursor = connection.cursor()
+    frmlogin = LogInForm(request.POST)
+    if frmlogin.is_valid():
+        user = authenticate(username=frmlogin.cleaned_data['userID'], password=frmlogin.cleaned_data['password'])
+        if user is not None and user.is_active:
+            if hasValidUserGrpAccess(user.id):
+                login(request,user)
+                request.session['user'] = {'id':user.id, 'userID':user.username, 'firstname':user.first_name, 'lastname':user.last_name}
+                return HttpResponseRedirect('/security/employee_search')
+            else:
+                return HttpResponseRedirect('/security/login?valid=ok&has_access=no')
+        else:
+            return HttpResponseRedirect('/security/login?valid=no&has_access=no')
+    else:
+        return HttpResponseRedirect('/security/login?valid=no&has_access=no')
+                    
+            
+def hasValidUserGrpAccess(user_id):
+    cursor = connection.cursor()
+    cursor.execute('''SELECT auth_group.* FROM auth_group, auth_user_groups WHERE 
+            auth_group.id = auth_user_groups.group_id  AND 
+            auth_user_groups.user_id=%s''', [user_id])
+    user_groups = cursor.fetchall()
+    has_valid_access_to_employee_mgt = False
+    for grp in user_groups:
+        cursor.execute('''SELECT COUNT(*) FROM group_perms_view gpv
+        WHERE gpv.model=%s AND gpv.group_id=%s''',['employee', grp[0]])
+        if cursor.fetchone()[0]>0:
+            return True
+    return False
+            
+
+def employeeSearch(request):
+    context = {'system_name': 'Employee Accounts',
+               'page':'search_emp',
+               'searchby': 'empid'}
+    user = request.session.get('user')
+
+    if user is not None and hasValidUserGrpAccess(user['id']):
+        return render(request, 'security/empmainsearch.html', context)
+    else:
+        return HttpResponseRedirect('/security/login')
+    
+def employeeView(request):
+    searchby = getRequest(request, "searchby")
+    search_text = getRequest(request, "search")
+    employees = None
+
+    if searchby=="empid" and search_text!="":
+        employees = User.objects.select_related('Employee').filter(username__contains=search_text).exclude(is_superuser = True)
+    elif searchby=="fname" and search_text!="":
+        employees = User.objects.select_related('Employee').filter(first_name__contains=search_text).exclude(is_superuser = True)
+    elif searchby=="lname" and search_text!="":
+        employees = User.objects.select_related('Employee').filter(last_name__contains=search_text).exclude(is_superuser = True)
+    else:
+        pass
+
+    context = {'system_name': 'Employee Accounts',
+               'searchby': searchby,
+               'employees': employees
+    }
+    
+    return render(request, 'security/empview.html', context)
+
+def employeeProfile(request):
+    cursor = connection.cursor()
+    username = getRequest(request, "username")
+    profile = User.objects.select_related('Employee').get(username=username)
+    cursor.execute('''SELECT * from auth_group 
+    WHERE auth_group.id = (SELECT group_id FROM auth_user_groups 
+    WHERE user_id=%s)''', [profile.id])
+
+    context = {'profile':profile,
+               'user_group': cursor.fetchone()[1]
+               }
+    return render_to_response("security/profilepanel.html", context)
+
+
+def viewAddEditEmployee(request):
+    context = RequestContext(request)
+    data = {'action': request.GET.get('action', 'add'),
+            'system_name': SYSTEM_NAME,
+            'page':'add_emp'
+    }
+
+    user = request.session.get('user')
+    
+    if request.method == 'POST':
+        emp_form = EmployeeForm(request.POST, request.FILES)
+        if emp_form.is_valid():                
+            if request.POST.get('action')=='add':
+                user = User(username = getRequest(request, 'username'),
+                            first_name = userForm.cleaned_data['firstname'],
+                            last_name = userForm.cleaned_data['lastname'])
+                if User.objects.filter(first_name=user.first_name, last_name=user.last_name).exists():
+                    pass
+                else:
+                    user.set_password('pis_' + user.username )
+                    user.save()
+                    pass
+
+            else:#edit
+                    pass
+        else:
+                #invalid input
+                pass
+    else:#display the form only
+            data['form'] = EmployeeForm()
+            return render_to_response('security/addedit_emp.html', data, context)
+    
+    
+
+def addEditEmployee(request):
+    cursor = connection.cursor()
+    action = getRequest(request, 'action')
+    userForm = UserForm(request.POST)
+    empForm = EmployeeForm(request.POST)
+    profPic = ProfPic(request.POST, request.FILES)
+
+
+    if action == 'add':
+        if userForm.is_valid() and empForm.is_valid():           
+            user = User(username = getRequest(request, 'username'),
+                        first_name = userForm.cleaned_data['firstname'], 
+                        last_name = userForm.cleaned_data['lastname'])
+            if User.objects.filter(first_name=user.first_name, last_name=user.last_name).exists():
+                return HttpResponseRedirect('../../security/view_addedit_employee?action=add&status=duplicate&fname='+user.first_name+'&lname='+user.last_name)
+            else:
+                user.set_password('pis_' + user.username )
+                user.save()
+                #add user_group
+                cursor.execute('''INSERT INTO auth_user_groups(user_id, group_id)
+                VALUES(%s, %s)''', [user.id, getRequest(request,'user_group')])
+                """
+                employee = Employee(user=user, position=empForm.cleaned_data, address=empForm.cleaned_data['address'])
+                """
+                query ='''INSERT INTO pis_system_employee
+                (user_id, position, address, image_path)
+                VALUES(%s, %s, %s, %s)'''
+                pic = ''
+                if 'picture' in request.FILES:
+                    pic = request.FILES['picture'].name
+                    upload_file('media/employees/', request.FILES['picture'])
+#                employee.save()
+                cursor.execute(query, [user.id, empForm.cleaned_data['position'], empForm.cleaned_data['address'], pic])
+
+                return HttpResponseRedirect('../../security/view_addedit_employee?action=add&status=inserted&username='+user.username+'&fname='+user.first_name+'&lname='+user.last_name)
+   
+    if action == 'edit':
+        if userForm.is_valid() and empForm.is_valid():
+            user = User.objects.get(username=getRequest(request, 'username'))
+            user.first_name = userForm.cleaned_data['firstname']
+            user.last_name = userForm.cleaned_data['lastname']
+            cursor.execute('''UPDATE auth_user_groups SET
+                              group_id = %s WHERE user_id = %s''', [getRequest(request, 'user_group'), user.id])
+            user.save()
+            employee = Employee.objects.get(user=user.id)
+            employee.address = empForm.cleaned_data['address'] 
+            employee.position = empForm.cleaned_data['position']
+            employee.save()
+            
+            return HttpResponseRedirect('../../security/view_addedit_employee?action=edit&status=updated&uname='+user.username)
+            
+def isEmployeeNameExist(firstname, lastname):
+    cursor = connection.cursor()
+    cursor.execute('''SELECT COUNT(*) AS name_count FROM auth_user 
+                      WHERE first_name = %s AND last_name = %s''',
+                   [firstname, lastname])
+    if cursor.fetchone()[0]>0:
+        return True
+    else:
+        return False
+
+
+'''
+def registration(request):
+    username=getRequest(request,'userID')
+    password=getRequest(request,'password')
+    feedback = "The Account you Enter is Invalid"
+
+    user=authenticate(username=username, password=password);
+    
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            
+            #employee = Employee.objects.get(user=user.id)
+            name = user.first_name+' '+user.last_name
+            userID = user.username
+            user = {'name':name, 'id':userID}
+            
+            item_search = ItemSearch()
+            sat = "/registration/searchRegStud"#search action target
+            return render(request, './registration/searchview_stud.html', {'system_name':'Enrolment System', 'user':user, 'item_search':item_search, 'sat':sat})
+        else:
+            return HttpResponseRedirect('registration/login',{'feedback',feedback})
+        
+    else:
+        return HttpResponseRedirect('/registration/login',{'feedback':feedback})
+    
+    
+def searchRegStudents(request):
+    context = RequestContext(request)
+    #search option whether you search the student by id, 
+    #first_name, last_name or by section
+    
+    option = getRequest( request, 's_opt');
+    search = getRequest( request, 'search')
+    students = {}
+
+    try:
+        stud_obj = StudentObj()
+        students = stud_obj.searchStud(search, option)
+        return render_to_response('./registration/searchview_stud.html',{'students':students, 'option':option, 'search':search}, context)
+    except Student.DoesNotExist:
+        return HttpResponse("No Results Found!")
+
+
+def regStudform(request):
+    form = StudentForm()
+    page = 'registration/reg_student.html'
+    sys_name = 'Registration'
+    form_header = "Register New Student"
+    return render(request, page, {'form':form, 'system_name':sys_name, 'form_header':form_header})
+
+
+#employee account views
+
+def employeeList(request):
+  #add employee form
+  sys_name = 'Registration'
+  page = 'registration/emp_list_page.html'
+  frm_hdr = "Register New Student"
+  grp_perms = Group.objects.all()
+  action = 'add'
+  formpic = ProfPic()
+  empform = EmployeeForm()
+
+  #employee object which returns list of employee to 
+  #be displayed in the employee table
+  emp_obj = EmployeeObj()
+  employees = emp_obj.getAllEmployee()
+
+  context = {'employees':employees,'frm_hdr':frm_hdr, 'sys_name':sys_name, 'grp_perms':grp_perms, 'formpic':formpic, 'empform':empform, 'action':action}
+
+  return render(request, page, context)
+
+
+def viewEmployees(request):
+    
+  #add employee form
+  sys_name = 'Registration'
+  page = 'registration/emp_list_page.html'
+  frm_hdr = "Register New Student"
+  grp_perms = Group.objects.all()
+  action = 'add'
+  formpic = ProfPic()
+  empform = EmployeeForm()
+
+  #employee object which returns list of employee to 
+  #be displayed in the employee table
+  size = User.objects.count()
+  prev = prev_offset(offset, limit)
+  next = next_offset(offset, limit, size)
+  employees = Employee.objects.select_related('User').all()[offset:limit+offset]
+  #update limit offset
+
+  context = {'employees':employees,
+             'frm_hdr':frm_hdr,
+             'sys_name':sys_name,
+             'grp_perms':grp_perms,
+             'formpic':formpic,
+             'empform':empform,
+             'action':action,
+             'size':size, 
+             'limit':limit, 
+             'next':next, 
+             'prev':prev}
+
+  return render(request, page, context)
+
+  
+
+def editEmpForm(request):
+    context = RequestContext(request)
+    page = 'registration/emp_account_form.html'
+    username = getRequest(request, 'username')
+    emp_obj = EmployeeObj()
+    employee = emp_obj.getEmpInfo(username)
+    sys_name = 'Registration'
+    frm_hdr = "Register New Student"
+    grp_perms = Group.objects.all()
+    formpic = ProfPic()
+    empform = EmployeeForm(employee)
+    action = 'edit'
+    return render_to_response(page, {'frm_hdr':frm_hdr, 'sys_name':sys_name, 'grp_perms':grp_perms, 'formpic':formpic, 'empform':empform, 'action':action}, context)
+
+
+def addEmpAcc(request):
+    username = '%s' %genEmpID()
+    try:
+        try:
+            while User.objects.get(username=username) is not None: 
+                username = '%s' %genEmpID
+        finally:
+            empform = EmployeeForm(request.POST)
+            if empform.is_valid():
+                fname = empform.cleaned_data['firstname']
+                lname = empform.cleaned_data['lastname']
+                password = 'pis_'+username
+                position = empform.cleaned_data['position']
+                address = empform.cleaned_data['address']
+                #    profile_pic = request.FILES['profpix']
+                #user group permission and user
+                grp = Group.objects.get(id=getRequest(request, 'grp_perm'))
+                user = User(username=username,
+                            first_name = fname, 
+                            last_name = lname, 
+                        ) 
+                user.set_password(password)
+                user.save()
+                user.groups.add(grp)
+                #add employee profile
+                id = user.id
+                emp = Employee(user=user, position=position, address=address)
+                #profile picture
+                picform = ProfPic(request.POST)
+                if picform.is_valid():
+                    emp.image_path = picform.cleaned_data['picture']
+                
+                emp.save()
+                
+                return HttpResponseRedirect('/registration/view_employee')
+            else:
+                pass
+    finally:
+        pass
+        
+
+def updateEmployee(request):
+    empform = EmployeeForm(request.POST)
+    if empform.is_valid():
+        username = empform.cleaned_data['username']
+        user = User.objects.get(username=username)
+        user.first_name = empform.cleaned_data['firstname']
+        user.last_name = empform.cleaned_data['lastname']
+        #    profile_pic = request.FILES['profpix']
+        #user group permission and user
+        grp = Group.objects.get(id=getRequest(request, 'grp_perm'))
+        user.save()
+        #user.groups.add(grp)
+        #add employee profile
+        id = user.id
+        emp = Employee.objects.get(user=user)
+        emp.position = empform.cleaned_data['position']
+        emp.address = empform.cleaned_data['address']
+        emp.save()
+        return HttpResponseRedirect('/registration/view_employee')
+    else:
+        pass
+
+
+def reg_login(request):
+    form = LogInForm()
+    page = 'login.html'
+    sys_name = 'Student Registration'
+    cover_url = '/static/images/billing_cover.jpg'
+    action_url = '/registration/'
+    feedback = 'Sample Feedback'
+    return render(request, page, {'form':form, 'system_name':sys_name, 'cover_url':cover_url, 'action_url':action_url, 'feedback':feedback})
+'''
+
+

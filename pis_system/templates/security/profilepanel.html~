@@ -1,0 +1,35 @@
+
+<div style="margin-top: 20px;">
+  <center><img src="/media/employees/{{ profile.employee.image_path }}" style="width:140px;height:140px;" class="img-thumbnail"></center>
+</div>
+<div style="margin-top:20px;">
+  <table class="table">
+    <tr>
+      <td><b>Username:</b></td>
+      <td>{{ profile.username }}</td>
+    </tr>
+    <tr>
+      <td><b> Name: </b></td>
+      <td>{{ profile.first_name }} &nbsp; {{ profile.last_name }}</td>
+    </tr>
+    <tr>
+      <td><b>Position:</b></td>
+      <td>{{ profile.employee.position }}</td>
+    </tr>
+    <tr>
+      <td><b>Address:</b></td>
+      <td>{{ profile.employee.address }}</td>
+    </tr>
+    <tr>
+      <td><b>User Group:</b></td>
+      <td>{{ user_group }}</td>
+    </tr>
+
+
+  </table>
+  <form action="view_addedit_employee" method="GET">
+    <input type="hidden" name="action" value="edit">
+    <input type="hidden" name="uname" value="{{ profile.username }}">
+    <input type="submit" class="btn btn-success" name="edit" value="Edit Profile">
+  </form>
+</div>

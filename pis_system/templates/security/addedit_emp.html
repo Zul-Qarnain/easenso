@@ -1,0 +1,95 @@
+{% extends "./security/base.html" %}
+{% load bootstrap3 %}
+{% block content %}
+<content>
+  <div class="container" style="min-height: 500px">
+    <div class="col-md-12">
+      <h2 class="header">
+	{% if action == "add" %}
+	Add Employee
+	{% else %}
+	Edit Employee
+	{% endif %}
+      </h2>
+      {% if success_message %}
+        <p class="alert alert-success">
+	  {{ success_message }}
+	</p>
+      {% endif %}
+      {% if error_message %}
+	<div class="alert alert-danger">
+	  {{ error_message }}
+	</div>
+      {% endif %}
+      {% if errors %}
+	<p class="alert alert-danger">
+	  {{ errrors }}
+	</p>
+      {% endif %}
+      
+      <form action="../../security/addedit_employee" class="form-horizontal content" role="form" enctype="multipart/form-data" method="POST">
+	{% csrf_token %}
+	<input type="hidden" name="action" value="{{ action }}">
+	<div class="form-group">
+	  <label class="col-sm-2">ID # / Username</label>
+	  <div class="col-sm-6">
+	    {{ form.username }}
+	  </div>
+	  <div class="col-sm-2">
+	    <a href="#" id="gen_emp_id_btn" class="btn btn-primary">Generate ID</a>
+	  </div>
+	</div>
+
+	<div class="form-group">
+	  <label class="col-sm-2">Firstname</label>
+	  <div class="col-sm-6">
+	    {{ form.first_name }}
+	  </div>
+	</div>
+
+	<div class="form-group">
+	  <label class="col-sm-2">Lastname</label>
+	  <div class="col-sm-6">
+	    {{ form.last_name }}
+	  </div>
+	</div>
+
+	<div class="form-group">
+	  <label class="col-sm-2">Address</label>
+	  <div class="col-sm-6">
+	    {{ form.address }}
+	  </div>
+	</div>
+
+	<div class="form-group">
+	  <label class="col-sm-2">Position</label>
+	  <div class="col-sm-6">
+	    {{ form.position }}
+	  </div>
+	</div>
+
+	<div class="form-group">
+	  <label class="col-sm-2">User Group</label>
+	  <div class="col-sm-6">
+	    {{ form.group }}
+	  </div>
+	</div>
+	
+	<div class="form-group">
+	  <label class="col-sm-2">Profile Picture</label>
+	  <div class="col-sm-6">
+	    {{ form.image_path }}
+	  </div>
+	</div>
+
+	<div class="form-group">
+	  <div class="col-sm-2 col-sm-offset-2">
+	    <input type="submit" class="btn btn-success" name="submit" value="Save Employee">
+	  </div>
+	</div>
+
+      </form>
+    </div>
+  </div>
+</content>
+{% endblock %}

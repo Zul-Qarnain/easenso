@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block navbar_li %}
+	<li class="active"><a href="/billing/student">Student</a></li>
+	<li><a href="#">Employee</a></li>
+	<li><a href="/billing/others">Others</a></li>
+{% endblock %}
+
+{% block content %}
+  <content>
+    <div class="container"  style="min-height:600px">
+      {% block left-content %}
+        <div class="col-sm-6">
+            <div id="stud_info">
+              {% include 'stub.html' %}	
+            </div>
+            {% include 'student_search.html' %}
+            {% include 'results_table.html' %}
+        </div>
+      {% endblock %}      
+      {% block right-content%}
+      {% endblock %}
+    </div>
+  </content>
+{% endblock %}
+
+{% block scripts %}
+
+  <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+
+  <script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+
+
+  <script type="text/javascript" src="/static/js/billing.js"></script>
+  <script type="text/javascript" src="/static/js/jquery.PrintArea.js_4.js"></script>
+  <script type="text/javascript" src="/static/js/moment.min.js"></script>
+{% endblock scripts %}

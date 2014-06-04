@@ -1,0 +1,15 @@
+<!---javascript:searchStud('name-search-form')--->
+<form class="form-search" id="name-search-form" action=" " method="POST">{% csrf_token %}
+  <div class="input-group">
+
+    <div class="input-group-addon">
+      	{{ search_form.options }}
+    </div>
+       {{ search_form.search }}    
+    <span class="input-group-btn">
+      <button class="btn btn-success" type="submit">
+	<span class="glyphicon glyphicon-search"></span>
+      </button>
+    </span>
+  </div>
+</form>

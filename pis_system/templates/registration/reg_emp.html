@@ -1,0 +1,59 @@
+{% extends './registration/base.html' %}
+
+{%block content%}
+   <!---register employee form---->
+     <form class="form-search" id="register_employee" action="{{sat}}" method="POST">{% csrf_token %}
+      <table style="margin: 5px;">
+      	<tr>
+      	  <th colspan="2">Add Employee</th>
+      	</tr>
+      	<tr>
+      	  <td>Employee ID:</td>
+      	  <td>
+      	  	<input name="emp_id" value="{{ emp_id }}" type="number" required="" class="form-control" placeholder="Enter ID Number">
+      	  </td>
+      	</tr>
+      	<tr>
+      	  <td>First Name:</td>
+      	  <td>
+      	  	<input name="emp_fname" value="{{ emp_fname }}" type="text" required="" class="form-control" placeholder="Enter First Name">
+      	  </td>
+      	</tr>
+      	<tr>
+      	  <td>Middle Initial:</td>
+      	  <td>
+      	  	<input name="emp_mi" value="{{ emp_mi }}" type="text" required="" class="form-control" placeholder="Enter Middle Initial">
+      	  </td>
+      	</tr>
+      	<tr>
+      	  <td>Last Name:</td>
+      	  <td>
+      	  	<input name="emp_lname" value="{{ emp_lname }}" type="text" class="form-control" placeholder="Enter Lastname">
+      	  </td>
+      	</tr>
+      	<tr>
+      	  <td>Position:</td>
+      	  <td>
+      	  	<input name="emp_position" value="{{ emp_position }}" type="text" class="form-control" placeholder="Enter Position">
+      	  </td>
+      	</tr>
+      	<tr>
+      	  <td>Address:</td>
+      	  <td>
+      	  	<input name="emp_address" value="{{ emp_address }}" type="text" class="form-control" placeholder="Enter Adress">
+      	  </td>
+      	</tr>
+      	<tr>
+      	  <td></td>
+      	  <td align="center">
+			<span class="input-group-btn">
+      		  <button class="btn btn-success" type="submit">
+			    <span class="glyphicon glyphicon-save"></span>
+      		  </button>
+    		</span>
+      	  </td>
+      	</tr>
+      </table>
+     </form>
+   
+{%endblock%}

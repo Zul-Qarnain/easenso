@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<content>
+  <div class="jumbotron" style="padding-bottom: 10px">
+    <div class="container">
+      <h2>Philippine Integrated School Foundation, Inc.</h2>
+      <h4>Marawi City, Philippines 9700</h4>
+      <br>
+      <br>
+      <!--<div class="col-md-12 icons" style="margin: 0 auto; text-align: center">
+        <a href="/security">
+          <img class="img-responsive text-center" src='/static/images/dashboard/security_thumb.png' width="24px">
+        </a>
+        <a href="/billing">
+          <img class="img-responsive text-center" src="/static/images/dashboard/billing_thumb.png" width="24px">
+        </a>
+        <a href="/registration">
+          <img class="img-responsive text-center" src="/static/images/dashboard/registration_thumb.png" width="24px">
+        </a>
+      </div>-->
+    </div>    
+  </div>
+  <div class="container" style="min-height:336px" >
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="media">
+            <a class="pull-left" href="/security">
+              <img class="media-object" src='/static/images/dashboard/security_thumb.png' alt="..." width="100px">
+            </a>
+            <div class="media-body">
+              <h3 class="media-heading">Security Module</h3>
+              <p>Manage privileges and permissions for the system.</p>
+              <p><a href="/security/login" class="btn btn-primary" role="button">Login here</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+     <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="media">
+            <a class="pull-left" href="/billing">
+              <img class="media-object" src="/static/images/dashboard/billing_thumb.png" alt="..." width="100px">
+            </a>
+            <div class="media-body">
+              <h3 class="media-heading">Billing Module</h3>
+              <p>Access the billing module to process transactions</p>
+              <p><a href="/billing" class="btn btn-primary" role="button">Go here</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+        <div class="media">
+          <a class="pull-left" href="/registration">
+            <img src="/static/images/dashboard/registration_thumb.png" alt="..." width="100px">
+          </a>
+          <div class="media-body">
+            <h3 class="media-heading">Registration Module</h3>
+            <p>Register students and manage student records</p>
+            <p><a href="/registration" class="btn btn-primary" role="button">Log In</a></p>
+          </div>
+        </div>
+        </div>
+      </div>
+      <!--
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="media">
+            <a class="pull-left" href="#">
+              <img src="/static/images/dashboard/billing_thumb.png" alt="..." width="100px">
+            </a>
+            <div class="media-body">
+              <h3 class="media-heading">Grading Module</h3>
+              <p>View and input student grades</p>
+              <p><a href="#" class="btn btn-primary disabled" role="button">Log In</a></p>
+            </div>
+          </div>
+        </div>
+      </div>-->
+    </div>
+    
+  </div>
+</content>
+{% endblock content %}
+

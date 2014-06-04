@@ -1,0 +1,21 @@
+{% extends 'system_base.html' %}
+{% load bootstrap3 %}
+
+{% block navbar_li %}
+   <li {% if page == 'search_emp'%} class="active" {% endif %}><a href="employee_search">Search Employee</a></li>
+   <li {% if page == 'add_emp'%} class="active" {% endif %}><a href="addedit_employee">Add Employee</a></li>
+{% endblock %}
+
+{% block css %}
+
+<link href="/static/css/security.css" media="screen" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="/static/js/input_validator.js"></script>
+<script type="text/javascript" src="/static/js/security.js"></script>
+{% endblock %}
+
+
+

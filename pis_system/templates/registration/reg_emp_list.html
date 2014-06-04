@@ -1,0 +1,32 @@
+{% if employees %}
+   <table class="table table-condensed table-hover">
+      <caption><font color="#0747E4"> Showing {{total}} of {{size}} result(s)... </font></caption>
+      <thead>
+	<tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Position</th>
+	  	  <th>Address</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for employee in employees %}
+        <tr>
+	          <td>{{ employee.employeeID }}</td>
+	          <td>
+			    <a id="{{ employee.employeeID }}" 
+			       href="javascript:showSIaG({{ employee.employeeID }})">
+		              {{ employee.lastname|upper }} &nbsp;
+		              {{ employee.firstname}} &nbsp;
+		              {{ employee.mi}} &nbsp;
+			    </a>
+	          </td>
+	          <td>{{ employee.position }}</td>
+	          <td>{{ employee.address }}</td>
+        </tr>
+	{% endfor %}
+      </tbody>
+   </table>
+{% else %}
+   <p class="alert alert-danger"><h3>No Results</h3><p>
+{% endif %}

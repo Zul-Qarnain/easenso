@@ -1,0 +1,36 @@
+{% if employees %}
+   <table class="table table-condensed table-hover">
+      <caption>
+	<font color="#0747E4"> 
+	  {{employees|length}} result(s) found...
+	</font>
+      </caption>
+      <thead style="fixed">
+	<tr class="navbar-inverse">
+	  <th></th>
+          <th style="color:white">Username</th>
+          <th style="color:white">Name</th>
+	  <th style="color:white">Position</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for employee in employees %}
+        <tr>
+	  <td>
+          </td>
+          <td>{{ employee.username }}</td>
+          <td>
+	    <a id="{{ student.studentID }}" 
+	       href="javascript:viewEmpProfile({{ employee.username }})">
+              {{ employee.last_name|upper }} &nbsp;
+              {{ employee.first_name}} &nbsp;
+	    </a>
+          </td>
+          <td>{{ employee.employee.position }}</td>
+        </tr>
+	{% endfor %}
+      </tbody>
+   </table>
+{% else %}
+   <h3 class="alert alert-danger">No Results Found!<h3>
+{% endif %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+<content>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10 col-md-8">
+        <div class="jumbotron">
+          <h1>PIS System</h1>
+          <h3>Philippine Integrated School System</h3>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <a href="/billing">
+            <img src='/static/images/billing_thumb.jpg' alt="..." style="border-radius:4px">
+          </a>
+          <div class="caption">
+            <h3>Security Module</h3>
+            <p>Manage privileges and permissions for the system.</p>
+            <p><a href="/security/login" class="btn btn-primary" role="button">Go here</a></p>
+          </div>
+        </div>
+      </div>      
+    </div>
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <a href="/billing">
+            <img src="/static/images/billing_thumb.jpg" alt="..." style="border-radius:4px">
+          </a>
+          <div class="caption">
+            <h3>Billing Module</h3>
+            <p>Access the billing module to process transactions</p>
+            <p><a href="/billing" class="btn btn-primary" role="button">Go here</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img src="/static/images/billing_thumb.jpg" alt="..." style="border-radius:4px">
+          <div class="caption">
+            <h3>Registration Module</h3>
+            <p>Register students and manage student records</p>
+            <p><a href="#" class="btn btn-primary disabled" role="button">Log In</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img src="/static/images/billing_thumb.jpg" alt="..." style="border-radius:4px">
+          <div class="caption">
+            <h3>Grading Module</h3>
+            <p>View and input student grades</p>
+            <p><a href="#" class="btn btn-primary disabled" role="button">Log In</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+<content>
+{% endblock content %}

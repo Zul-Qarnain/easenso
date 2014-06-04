@@ -1,0 +1,29 @@
+                    
+                    <caption><font color="#0747E4"> Showing {{total}} of {{size}} result(s)... </font></caption>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Designation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                       
+                        {% for student in students %}
+			   <a href="#">
+                            <tr>
+                                    <td><a id="{{ student.studentID }}" href="javascript:showSIaG({{ student.studentID }})">{{ student.studentID }}</a></td>
+                                    <td>
+                                          {{ student.lastname}} {{' '}}
+                                          {{ student.firstname}} {{' '}}
+                                          {{ student.mi}} {{' '}} 
+                                    </td>
+                                    <td>{{ student.get_year_level_display }}</td>
+                                    
+                            </tr>
+			    </a>
+                       
+                        {% endfor %}
+                       
+                    </tbody>

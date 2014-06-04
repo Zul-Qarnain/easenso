@@ -1,0 +1,40 @@
+<table id='stud_list' class="table table-hover table-condensed">
+    <caption ><font color="#0747E4"> Showing {{ students.object_list|length }} of {{size}} result(s)... </font></caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Designation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students.object_list %}
+                <tr id="{{ student.studentID }}" style="cursor:pointer" onclick="javascript:getStudent({{ student.studentID }})">
+                    <td>{{ student.studentID }}</td>
+                    <td>
+                        {{ student.lastname}} &nbsp;
+                        {{ student.firstname}} &nbsp;
+                        {{ student.mi}} &nbsp; 
+                    </td>
+                    <td>
+                        {{ student.last_school_att}}
+                    </td>
+                                
+                </tr>
+            {% endfor %}
+                       
+        </tbody>
+</table>
+<ul class="pager">
+  {% if students.has_previous %}
+    <li class="previous"><a href="/billing/student?{{ query_params.urlencode }}&amp;page={{ students.previous_page_number }}">&laquo; Previous</a></li>
+  {% else %}
+    <li class="previous disabled"><a href="#">&laquo; Previous</a></li>
+  {% endif %}
+  {% if students.has_next %}
+    <li class="next"><a href="/billing/student?{{ query_params.urlencode }}&amp;page={{ students.next_page_number }}">Next &raquo;</a></li>
+  {% else %}
+    <li class="next disabled"><a href="#">Next &raquo;</a></li>
+  {% endif %}
+</ul>
+

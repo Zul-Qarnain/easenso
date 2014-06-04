@@ -1,0 +1,30 @@
+from django.conf.urls import patterns, include, url
+from django.contrib import admin
+from django.contrib.auth.views import logout
+from django.conf import settings
+from django.conf.urls.static import static
+
+from billing.views import search_student, login
+from views import dashboard
+
+admin.autodiscover()
+urlpatterns = patterns('',
+
+    url(r'^billing/', include('billing.urls')),
+    url(r'^login$', login), 
+    url(r'^searchstudent?$', search_student),
+    url(r'^logout$', logout, {'next_page':'/'}),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^registration/', include('registration.urls')),
+    url(r'^security/', include('security.urls')),
+    url(r'^$', dashboard), 
+    url(r'^dashboard$', dashboard), 
+    
+)
+
+#urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += patterns(
+        'django.views.static',
+        (r'media/(?P<path>.*)',
+        'serve',
+        {'document_root': settings.MEDIA_ROOT}), )

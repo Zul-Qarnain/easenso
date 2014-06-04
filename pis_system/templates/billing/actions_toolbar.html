@@ -1,0 +1,25 @@
+<ul class="nav nav-tabs">
+  <li id="bills_tab" class="active">
+    <a href="javascript:getBills({{studentID}})">Bills</a>
+  </li>
+  <li id="history_tab">
+    <a href="javascript:getHistoryTransaction({{studentID}})">Transaction History</a>
+  </li>
+  <li id="evaluation_tab">
+    <a href="#">Evaluation</a>
+  </li>
+</ul>
+
+<div class="btn-group btn-group-justified" >
+      <a id="add_bill_button" data-toggle="modal" data-target="#add_bill" class="btn btn-default btn-small">
+        <strong>Bill</strong>
+      </a>
+
+      <a id="{{studentID}}" href="javascript:getHistoryTransaction({{studentID}})" class="btn btn-default btn-small ">
+        <strong>Transaction History</strong>
+      </a>
+      <a id="evaluation_button" class="btn btn-default btn-small disabled">
+        <strong>Evaluation</strong>
+      </a>
+      
+</div>

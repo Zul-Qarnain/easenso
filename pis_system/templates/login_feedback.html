@@ -1,0 +1,9 @@
+<p
+{% if valid == "ok" and has_access == "no" %}
+   class="alert alert-danger">
+  Access <b>Denied</b>
+{% elif valid == "no" and has_access == "no" %}
+   class="alert alert-danger">
+   <b>Invalid</b> UserID or Password
+{% endif %}
+</p>

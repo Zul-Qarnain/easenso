@@ -1,0 +1,66 @@
+{% load l10n %}
+  {% if bills %}
+  
+    <table class="table table-hover table-condensed" style="max-height:480px; overflow:auto">
+      <thead>
+        <th>
+          <input type="checkbox" id="check_all_bills" name="student_bills[]" checked value="{{ bill.bill_item_name.id}}"/>
+        </th>
+        <th style="min-width:300px">Item</th>
+        <th style="text-align:right">Amount</th>
+      </thead>
+      <tbody>  
+<!--           <tr>
+            <td><input type="checkbox" id="bill_picker" data-value="{{  bill.balance }}" data-item="{{ bill.bill_item_name }}" checked name="student_bills[]" value="{{ bill.id}}" class="bill_picker"/></td>    
+            <td>{{ monthly_name}}</td>
+            <td style="text-align:right">{{  monthly_tuition_sum }}</td>
+          </tr> -->
+        {% for bill in bills %}
+          <tr>
+
+            {% if bill.bill_item_name.item_type == 'T' %}
+                <input type="hidden" id="Tuition"  value="{{bill.bill_item_name}}" />
+                <input type="hidden" id="Tuition_amount"  value="{{bill.balance}}" />
+                 <input type="hidden" id="Tuition_id"  value="{{bill.bill_item_name.id}}" />
+
+            {% endif %}
+            
+            <td><input type="checkbox" id="bill_picker" data-type="{{ bill.bill_item_name.item_type }}" data-value="{{  bill.balance | unlocalize }}" data-item="{{ bill.bill_item_name }}" checked name="student_bills[]" value="{{ bill.id}}" class="bill_picker"/></td>    
+            <td>{{ bill.bill_item_name }}</td>
+            <td style="text-align:right">{{  bill.balance }}</td>
+             
+          </tr> 
+        {% endfor %}
+      </tbody>
+    </table>
+    <table class="table table-condensed" style="margin-bottom:2px">
+      <tbody>
+          <tr>
+            <td style="min-width:200px"><h4>Total</h4></td>
+            <td style="text-align:right"><h4 style="padding: 0; color: #790000" id="total">{{ total }}</h4></td>
+          </tr>
+          <tr>
+            <td style="min-width:200px"><h4>Amount due</h4></td>
+            <td style="text-align:right"><h1 style="padding: 0; color: #790000" id="due">{{ amount_due }}</h1></td>
+          </tr>
+          <tr>
+            <td style="min-width:200px"><h4>Change</h4></td>
+            <td style="text-align:right"><h2 style="padding: 0; color: #555" id="change">0.00</h2></td>
+          </tr>
+      </tbody>
+    </table>
+    <form method="POST" id="transaction_form" action="javascript:transact('student/transact',{{studentID}})">
+      {% csrf_token %}
+      <input type="number" step="any" min="0" id="tender" class="input-lg form-control" placeholder="Cash Tendered"/>
+      <button id="transact" data-loading-text="Processing Transaction" class="btn btn-success btn-lg" style="width:100%; margin-top:10px">Transact</button>
+    </form>
+  {% else %}
+  <h1>This student currently has no bills.</h1>
+  <h3>
+    If this student is supposed to have bills,<br>consult your supervisor.
+    <button type="button" id="add_bill_button" data-toggle="modal" data-target="#add_bill" class="btn btn-success">Bill this student</button>
+  </h3>
+  
+  {% endif %}
+
+{% include 'billing/receipt.html' %}

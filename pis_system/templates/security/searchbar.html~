@@ -1,0 +1,28 @@
+<!---javascript:searchStud('name-search-form')--->
+<form class="form-search" id="name-search-form" action="employee_view" method="POST">
+  {% csrf_token %}
+  <div class="input-group">
+    <input type="text" id="search-text" name="search" class="form-control" value="{{ search }}" placeholder="Enter Name">    
+    <span class="input-group-btn">
+      <button class="btn btn-success" type="submit">
+	<span class="glyphicon glyphicon-search"></span>
+      </button>
+    </span>
+  </div>
+  <!--- search option --->
+  </br>
+  <div>
+    <center>
+      <label>Search By:</label>&nbsp;
+      <label><input type="radio" name="search_by" value="empid" {% if searchby == "empid" %} checked {% endif %}>
+	&nbsp;ID Number
+      </label>&nbsp;
+      <label><input type="radio" name="search_by" value="fname" {% if searchby == "fname" %} checked {% endif %}>
+	&nbsp;Firstname
+      </label>&nbsp;
+      <label><input type="radio" name="search_by" value="lname" {% if searchby == "lname" %} checked {% endif %}>
+        &nbsp;Lastname
+      </label>
+    </center>
+  </div>
+</form>

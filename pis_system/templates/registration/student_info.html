@@ -1,0 +1,149 @@
+{% extends './registration/base.html' %}
+
+{% block navbar_li %}
+	<li class="active"><a href="/registration/searchRegStud">Student</a></li>
+	<li><a href="/registration/regStud">Register Form</a></li>
+{% endblock %}
+
+{% block content %}
+
+<content>
+  <div class="container" style="min-height: 574px;">
+    <div class="row">
+      <div class="col-md-4" style="border-right: 1px solid grey;">
+        <div class="media">
+        	<img style="border: 1px solid grey;" class="media-object" src="{{MEDIA_URL}}{{student.image_path}}" width="200" height="200" />
+        </div>
+        <div class="caption">
+            <h3>
+            	{{ student.firstname}}{{ ' '}}
+            	{{ student.mi | upper }}{{ '. '}}
+            	{{ student.lastname | upper }}
+            </h3>
+            <h4>
+            	{{ student.studentID }} |
+            	<a style="cursor: pointer;" class="btn-small" data-toggle="modal" data-target="#myModal">Edit Student Information</a> 
+            </h4>
+            <br />
+            <table class="table table-condensed table-striped">
+            	<tr>
+            		<td><label>Academic Status:</label></td>
+            				<td>{{ student.get_acad_status_display }}</td>
+            		
+            	</tr>
+            	<tr>
+            		<td><label>Privilege/Scholarship:</label></td>
+            		<td>{{ student.privilege }}</td>
+            	</tr>
+            	<tr>
+            		<td><label>Year Level:</label></td>
+            		<td>{{ student.get_year_level_display }}</td>
+            	</tr>
+            	<tr>
+            		<td><label>Gender:</label></td>
+            		<td>{{ student.get_gender_display }}</td>
+            	</tr>
+            	<tr>
+            		<td><label>Date of Birth:</label></td>
+            		<td>{{ student.date_of_birth }}</td>
+            	</tr>		
+            	<tr>
+            		<td><label>Father's Name:</label></td>
+            		<td>{{ student.father_name }}</td>
+            	</tr>
+            	<tr>
+            		<td><label>Father's Occupation:</label></td>
+            		<td>{{ student.father_occ }}</td>
+            	</tr>
+            	<tr>
+            		<td><label>Mother's Name:</label></td>
+            		<td>{{ student.mother_name }}</td>
+            	</tr>
+            	<tr>
+            		<td><label>Mother's Occupation:</label></td>
+            		<td>{{ student.mother_occ }}</td>
+            	</tr>
+            	<tr>
+            		<td><label>Date Admitted:</label></td>
+            		<td>{{ student.date_admitted }}</td>
+            	</tr>
+            	<tr>
+            		<td><label>Previous School:</label></td>
+            		<td>{{ student.last_school_att }}</td>
+            	</tr>
+            	<tr>
+            		<td><label>Previous School Address:</label></td>
+            		<td>{{ student.last_school_att_address }}</td>
+            	</tr>
+            </table>
+         </div>
+      </div>
+      <div class=" col-md-8">
+      	<div class="panel-group" id="accordion" >
+  		  <div class="panel panel-default" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			  <div style="cursor: pointer;" class="panel-heading">
+			    <h4 class="panel-title">
+			        <label>Billing Acounts</label>
+			    </h4>
+			  </div>
+			  <div id="collapseOne" class="panel-collapse collapse in">
+			    <div class="panel-body">
+					  {% if bills %}
+					    <table class="table table-condensed table-striped" style="max-height:480px; overflow:auto">
+					      <thead>
+					        <th style="min-width:300px">Item</th>
+					        <th style="text-align:right">Amount</th>
+					      </thead>
+					      <tbody>  
+					        {% for bill in bills %}
+					          <tr>    
+					            <td>{{ bill.bill_item_name }}</td>
+					            <td style="text-align:right">{{  bill.balance }}</td>
+					          </tr> 
+					        {% endfor %}
+					      </tbody>
+					    </table>
+					    <table class="table table-condensed" style="margin-bottom:2px">
+					      <tbody>
+					          <tr>
+					            <td style="min-width:200px"><h4>Total</h4></td>
+					            <td style="text-align:right"><h4 style="padding: 0; color: #790000" id="total">{{ total }}</h4></td>
+					          </tr>
+					          <tr>
+					            <td style="min-width:200px"><h4>Amount due</h4></td>
+					            <td style="text-align:right"><h1 style="padding: 0; color: #790000" id="due">{{ amount_due }}</h1></td>
+					          </tr>
+					          <tr>
+					            <td style="min-width:200px"><h4>Change</h4></td>
+					            <td style="text-align:right"><h2 style="padding: 0; color: #555" id="change">0.00</h2></td>
+					          </tr>
+					      </tbody>
+					    </table>
+					    </form>
+					  {% else %}
+						  <h1>This student currently has no bills.</h1>
+					  {% endif %}
+	      	  	</div>
+			  </div>
+		  </div>
+		  <div class="panel panel-default" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+		    <div class="panel-heading" style="cursor: pointer;">
+		      <h4 class="panel-title">
+		          <label>Grade Evaluation</label>
+		      </h4>
+		    </div>
+		    <div id="collapseThree" class="panel-collapse collapse">
+		      <div class="panel-body">
+		        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+		      </div>
+		    </div>
+		  </div>     
+		</div>
+      </div>
+  </div>
+ </div>
+ 
+ <!--------------------------------------Modal------------------------------------>
+{% include "registration/edit_student_info.html" %}
+</content>
+{% endblock content %}

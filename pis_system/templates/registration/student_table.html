@@ -1,0 +1,37 @@
+{% if students %}
+   <table class="table table-condensed table-hover">
+      <caption><font color="#0747E4"> Showing {{students.count}} of {{size}} result(s)... </font></caption>
+      <thead>
+	<tr>
+          <th>ID</th>
+          <th>Name</th>
+	  <th>Yr-Level</th>
+	  <th>Gender</th>
+	  <th>Date Admitted</th>
+	  <th>Academic Status</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for student in students %}
+        <tr style="cursor:pointer" onclick="location.href='/registration/viewStudentInfo/{{student.studentID}}/'">
+          <td>{{ student.studentID }}</td>
+			<td style="font-weight: bold;">
+				{{ student.lastname|upper }} &nbsp;
+				{{ student.firstname}} &nbsp;
+				{{ student.mi}} &nbsp;
+			</td>
+            <td>{{ student.get_year_level_display }}</td>
+	  		<td>{{ student.get_gender_display }}</td>
+	  		<td>{{ student.date_admitted}}</td>
+	  		<td>{{ student.get_acad_status_display }}</td>
+        </tr>
+	{% endfor %}
+      </tbody>
+   </table>
+{% else %}
+   <div class="alert alert-danger">
+     <h4>No Results Found!</h4>
+       <p> Search student by <b>id number, firstname, or lastname</b> by using the <b>search bar</b> above</p>
+     </h4>
+   </div>
+{% endif %}

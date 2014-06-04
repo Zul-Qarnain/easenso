@@ -1,0 +1,77 @@
+{% extends 'billing/base.html' %}
+
+{% block navbar_li %}
+	<li><a href="/billing/student">Student</a></li>
+	<li><a href="#">Employee</a></li>
+	<li  class="active"><a href="/billing/others">Others</a></li>
+{% endblock %}
+
+{% block left-content %}
+  <div class="col-sm-4">
+    
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h3>One-off Transactions</h3>
+          <form method='get' action="/billing/others" class="form-inline">
+          {% if payee %}
+            <h4><strong>Payee:</strong> <span id="payee_name">{{ payee }}</span></h4>
+            <button id="change_button" class="btn btn-primary pull-right">Change</button>
+          {% else %}
+            <input type="text" name="payee" class="form-control" id="payee_name" value="{{ payee }}" placeholder="Enter Payee's Name Here" required="true"/>
+            <button id="change_button" class="btn btn-primary pull-right">Transact</button>
+          {% endif %}
+          </form>
+        </div>
+      </div>
+    {% if payee %}
+    <form method="get" class="form-search" action="/billing/others">
+      <input type="hidden" name="payee" value="{{ payee }}"/>
+      <div class="input-group">
+        <div class="input-group-addon">
+          <select id="item_search_filters" type="radio">
+            <option value="item_code"/>Item Code
+            <option value="item_name"/>Item Name
+          </select>
+        </div>
+        <input type="text" name="query" class="form-control" id="item_search_field" placeholder="Search for an item"/>
+        <span class="input-group-btn">
+          <button class="btn btn-success" name="search" type="submit">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </span>
+      </div><!-- search btn-group -->
+    </form>
+    <form method="post" id="bill_pick" action="javascript:billStudent('bill_pick')"> 
+      <input type="hidden" id="query_copy" value="{{ query_copy }}"/>
+      {% if rs%}
+      {% include 'billing/bill_suggestions.html' %}
+      <button onclick="javascript:addBill('bill_pick')"
+          type="button" id="add_bills_button" class="btn btn-primary col-sm-12" >Add Bill</button>
+      {% endif %}
+    </form>
+    {% endif %}
+  </div>
+{% endblock left-content %}
+{% block right-content %}
+<div class="col-sm-8">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <!--<div class="btn-group btn-group-justified" >
+        <a id="" data-toggle="modal" data-target="#add_bill" class="btn btn-default btn-small">
+          <strong>Bill</strong>
+        </a>
+        <a id="transcation_history_button" data-toggle="modal" data-target="#transact_history" class="btn btn-default btn-small disabled">
+          <strong>Transaction History</strong>
+        </a>
+        <a id="evaluation_button" class="btn btn-default btn-small disabled">
+          <strong>Evaluation</strong>
+        </a>        
+      </div> Actions toolbar -->
+    <div id="bill_info">
+    {% include 'billing/oneoff_bill.html' %}
+    </div>
+    {% include 'billing/receipt.html' %}
+    </div>
+  </div>
+</div>
+{% endblock right-content %}

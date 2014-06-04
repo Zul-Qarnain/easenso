@@ -1,0 +1,31 @@
+<div class="thumbnail">
+  <div class="media">
+    
+    <a class="pull-left" href="#">
+      <div class="thumbnail">
+       {% if student %}
+          <img class="media-object" src="{{MEDIA_URL}}{{student.image_path}}" width="100px" height="100px" alt="ID Pic Here">
+        {% else %}
+          <img class="media-object" src="/media/students/default_male.png/" width="100px" height="100px" alt="ID Pic Here">    
+        {% endif %}
+      </div>
+    </a>
+    <div class="media-body">
+      <ul type="none">
+          {% if student %}
+            <li id="payee_name"><strong>{{student.lastname}}, {{student.firstname}} {{student.mi}}</strong></li>
+            <li>{{student.studentID}}</li>
+            <li>{{student.get_year_level_display}}</li>
+            <li>Academic Status: {{student.get_acad_status_display}}</li>
+            <li>Billing Profile: {{student.privilege}}</li>
+            <input type="hidden" name="student_id" value="{{student.studentID}}"/>
+          {% else %}
+            <li><strong>Search for a student to display info here</strong></li>
+            <li>High School, 8-A</li>
+            <li>Academic Status: OK</li>
+            <li>Billing Profile: PAYING</li>
+          {% endif %}
+        </ul>
+    </div>
+  </div>
+</div>

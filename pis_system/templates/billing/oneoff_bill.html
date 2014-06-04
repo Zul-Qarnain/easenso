@@ -1,0 +1,42 @@
+{% load l10n %}
+{% if bills %}
+      <table class="table table-hover table-condensed" style="max-height:480px; overflow:auto">
+        <thead>
+          <th>
+            <input type="checkbox" id="check_all_bills" name="student_bills[]" checked value="{{ bill.bill_item_name.id}}"/>
+          </th>
+          <th style="min-width:300px">Item</th>
+          <th style="text-align:right">Amount</th>
+        </thead>
+        <tbody>  
+          {% for bill in bills %}
+            <tr>
+              
+              <td><input type="checkbox" id="bill_picker" data-value="{{  bill.bill_item_name.amount | unlocalize }}" data-item="{{ bill.bill_item_name }}" checked name="student_bills[]" value="{{ bill.id}}" class="bill_picker"/></td>    
+              <td>{{ bill.bill_item_name }}</td>
+              <td style="text-align:right">{{  bill.bill_item_name.amount }}</td>
+            </tr> 
+          {% endfor %}
+        </tbody>
+      </table>
+        <table class="table table-condensed" style="margin-bottom:2px">
+          <tbody>
+              <tr>
+                <td style="min-width:300px"><h4>Amount due</h4></td>
+                <td style="text-align:right"><h1 style="padding: 0; color: #790000" id="total">{{ total }}</h1></td>
+              </tr>
+              <tr>
+                <td style="min-width:300px"><h4>Change</h4></td>
+                <td style="text-align:right"><h2 style="padding: 0; color: #555" id="change">0.00</h2></td>
+              </tr>
+          </tbody>
+        </table>
+        <form method="POST" id="transaction_form" action="javascript:transact_one('transact_one')">
+          {% csrf_token %}
+          <input type="number" id="tender" class="input-lg form-control" placeholder="Cash Tendered"/>
+          <button id="one_off_transact" data-loading-text="Processing Transaction" class="btn btn-success btn-lg" style="width:100%; margin-top:10px">Transact</button>
+        </form>
+      {% else %}
+        <h1>Add bills to perform transaction.</h1>
+      {% endif %}
+    

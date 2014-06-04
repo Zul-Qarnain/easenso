@@ -1,0 +1,177 @@
+{% extends './registration/base.html' %}
+
+{% block navbar_li %}
+	<li><a href="/registration/searchRegStud">Student</a></li>
+	<li class="active"><a href="/registration/regStud">Register Form</a></li>
+{% endblock %}
+
+{%block content%}
+
+   <!---register employee form---->
+<content>
+
+
+  <div class="container">
+    {% if success_message %}
+        <p class="alert alert-success">
+	  {{ success_message }}
+	</p>
+    {% endif %}
+    {% if error_message %}
+        <p class="alert alert-danger">
+	  {{ error_message }}
+	</p>
+    {% endif %}
+
+    <h2>Student Registration 
+      <small>
+      {% if action == "edit" %}
+         Update Student Profile
+      {% else %}
+         Register New Student
+      {% endif %}
+      </small>
+    </h2>
+   <div style="width:100%; top: 100px; left:5%; padding: 10px;">
+     <form class="form-horizontal" id="register_employee" action="/registration/regStud/" method="post" enctype="multipart/form-data">{% csrf_token %}
+       {% if errors %}
+         <div class="alert alert-danger">
+	   {{ errors }}
+	 </div>
+       {% endif %}
+      <input type="hidden" name="action" value="{{action}}">
+      <div class="form-group">
+	<label class="col-sm-2">Student ID</label>
+	<div class="col-sm-7">
+	  {{ form.studentID }}
+	</div>
+	<div class="col-sm-3">
+	  <a href="#" id="gen_stud_id_btn" class="btn btn-primary">Generate ID</a>
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Firstname</label>
+	<div class="col-sm-7">
+	  {{ form.firstname }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Middle Initial</label>
+	<div class="col-sm-7">
+	  {{ form.mi }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Lastname</label>
+	<div class="col-sm-7">
+	  {{ form.lastname }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Gender</label>
+	<div class="col-sm-7">
+	  {{ form.gender }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Year Level</label>
+	<div class="col-sm-7">
+	  {{ form.year_level }}
+	</div>
+      </div>
+      
+      <div class="form-group">
+	<label class="col-sm-2">Date Admitted</label>
+	<div class="col-sm-7">
+	  {{ form.date_admitted }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Date of Birth</label>
+	<div class="col-sm-7">
+	  {{ form.date_of_birth }}
+	</div>
+      </div>
+
+      
+      <div class="form-group">
+	<label class="col-sm-2">Father's Name</label>
+	<div class="col-sm-7">
+	  {{ form.father_name }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Father's Occupation</label>
+	<div class="col-sm-7">
+	  {{ form.father_occ }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Mother's Name</label>
+	<div class="col-sm-7">
+	  {{ form.mother_name }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Mother's Occupation</label>
+	<div class="col-sm-7">
+	  {{ form.mother_occ }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Last School Attended</label>
+	<div class="col-sm-7">
+	  {{ form.last_school_att }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Last School Attended Address</label>
+	<div class="col-sm-7">
+	  {{ form.last_school_att_add }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Academic Status</label>
+	<div class="col-sm-7">
+	  {{ form.acad_status }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Profile Picture</label>
+	<div class="col-sm-7">
+	  {{ form.image_path }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Privilege/Scholarship</label>
+	<div class="col-sm-7">
+	  {{ form.priv }}
+	</div>
+      </div>
+
+          
+      <div class="form-group">
+	<div class="col-sm-8 col-sm-offset-2">
+	  <button type="submit" name="submit" class="btn btn-primary" value="reg_bill">Register and BIll for Enrolment</button>
+	  <button type="submit" name="submit" class="btn btn-success" value="save">Save Profile Only</button>
+	</div>
+      </div>
+     </form>
+   </div>
+  </div>
+</content>
+{%endblock%}

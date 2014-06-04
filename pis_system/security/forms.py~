@@ -1,0 +1,35 @@
+from django import forms
+from django.contrib.auth.models import *
+
+
+class ProfPic(forms.Form):
+    picture = forms.FileField(widget=forms.ClearableFileInput())
+
+
+class UserForm(forms.Form):
+    username = forms.CharField(required=True, max_length=5,
+                              widget=forms.TextInput(attrs={
+                                  'class':'form-control',
+                                  'placeholder':'Type or Generate ID',
+                                  'required':'True'
+                              })
+    )
+    firstname = forms.CharField(widget=forms.TextInput(attrs= {'class': 'form-control', 'placeholder': 'Firstname', 'required':'True'}), required=True)
+    lastname = forms.CharField( widget=forms.TextInput(attrs= {'class': 'form-control', 'placeholder': 'Lastname', 'required':'True'}), required=True)
+
+    
+class EmployeeForm(UserForm):
+    position = forms.CharField( widget=forms.TextInput(attrs= {'class': 'form-control', 'placeholder': 'Position', 'required': 'True'}), required=True)
+    address = forms.CharField(widget=forms.TextInput(attrs= {'class': 'form-control', 'placeholder': 'Address'}))
+    picture = forms.FileField(widget=forms.ClearableFileInput(), required=False)
+    
+    group = forms.ModelChoiceField(queryset=Group.objects.all(),
+                    widget=forms.Select(attrs= {
+                        'class': 'form-control'
+                    }) 
+    )
+    
+    
+
+
+

@@ -1,0 +1,81 @@
+{% extends './registration/base.html' %}
+{% load bootstrap3 %}
+
+{% block left-pane %}
+<h3 style="padding-top: 10px;padding-left: 20px;padding-bottom: 10px;border-bottom: 1px solid;">New Employee Account  </h3>
+
+<form action="/registration/add_employee" method="post" role="form" enctype="multipart/from-data">{% csrf_token %}
+  <div style="position: relative;left: 20px;top:5px; width: 80%;">
+     {% bootstrap_form empform %}
+     <div class="form-group">
+        <label>Account Privilege</label>
+	<select name="grp_perm" class="form-control">
+	  {% for perm in grp_perms %}
+          <option value="{{ perm.id }}">{{ perm.name }}</option>
+	  {% endfor %}
+	</select>
+     </div>
+
+     {% bootstrap_form formpic %}
+  
+     <button type="submit" class="btn btn-success"> Submit </button>
+   </div>
+</form>
+   <div>
+   </div>
+  
+{% endblock %}
+{% block right-pane %}
+<div style="position: relative;width:100%;height: 80px; left: 0%; border-bottom: 1px solid rgb(200,200,200);">
+  <div style="position: absolute; left:1%; top: 27px;">
+    <a href="/registration/new_employee" class="btn btn-link" title="Register New Employee">
+      <span class="glyphicon glyphicon-plus-sign"></span> 
+      Employee
+    </a>
+  </div>
+  <div style="position: absolute; left:25%; width: 70%;top: 20px;">
+    {% include "registration/searchstud_form.html" %}
+  </div>
+</div>
+	 
+<div style="position: relative;width:100%;top: 20px;left:1%">
+  <div id="stud_list">
+    {% include "registration/emp_tbl.html" %}
+  </div>
+</div>
+       
+{% endblock %}
+
+<!---
+
+   search form
+   <table width="100%">
+     <tr>
+       <td width="50%">
+	 <div style="position: relative;width:100%;height: 80px; left: 0%; border-bottom: 1px solid rgb(200,200,200);">
+	    <div style="position: absolute; left:2%; top: 27px;">
+	      <a href="/registration/new_employee" class="btn btn-link" title="Register New Employee">
+		<span class="glyphicon glyphicon-plus-sign"></span> 
+		Employee
+	      </a>
+	    </div>
+	    <div style="position: absolute; left:30%; width: 60%;top: 20px;">
+	      {% include "registration/searchstud_form.html" %}
+	    </div>
+	  </div>
+	 
+	  <div style="position: relative;width:100%;top: 20px;left:5%">
+	   <div id="stud_list">
+	     {% include "registration/emp_tbl.html" %}
+	   </div>
+	 </div>
+       </td>
+       <td width="50%">
+       </td>
+       
+     </tr>
+
+   </table>
+--->
+
+

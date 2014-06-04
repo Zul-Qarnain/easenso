@@ -1,0 +1,29 @@
+<table id='stud_list' class="table table-hover table-condensed">
+    <caption ><font color="#0747E4"> Showing {{total}} of {{size}} result(s)... </font></caption>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Designation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+                <tr>
+                    <td><a id="{{ student.studentID }}" href="javascript:getStudent({{ student.studentID }})">{{ student.studentID }}</a>
+                    </td>
+                    <td>
+                        {{ student.lastname}} &nbsp;
+                        {{ student.firstname}} &nbsp;
+                        {{ student.mi}} &nbsp; 
+                    </td>
+                    <td>
+                        {{ student.last_school_att}}
+                    </td>
+                                
+                </tr>
+                       
+            {% endfor %}
+                       
+        </tbody>
+</table>

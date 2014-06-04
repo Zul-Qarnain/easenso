@@ -1,0 +1,42 @@
+{% if employees %}
+   <table class="table table-condensed table-hover">
+      <caption>
+	<font color="#0747E4"> 
+	  Showing {{total}} of {{size}} result(s)...
+	</font>
+      </caption>
+      <thead>
+	<tr>
+	  <th></th>
+          <th>Username</th>
+          <th>Name</th>
+	  <th>Position</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for employee in employees %}
+        <tr>
+	  <td>
+<!--	    <a href="">
+	      <span class="glyphicon glyphicon-edit"></span>
+	    </a>&nbsp;
+	    <a href="">
+	      <span class="glyphicon glyphicon-remove"></span>
+	    </a>--->
+          </td>
+          <td>{{ employee.username }}</td>
+          <td>
+	    <a id="{{ student.studentID }}" 
+	       href="javascript:set_edit_emp({{ employee.username }})">
+              {{ employee.last_name|upper }} &nbsp;
+              {{ employee.first_name}} &nbsp;
+	    </a>
+          </td>
+          <td>{{ employee.position }}</td>
+        </tr>
+	{% endfor %}
+      </tbody>
+   </table>
+{% else %}
+   <p><strong>No Results Found!</strong><p>
+{% endif %}

@@ -1,0 +1,32 @@
+{% extends './registration/base.html' %}
+
+{% block navbar_li %}
+	<li class="active"><a href="/registration/searchRegStud">Student</a></li>
+	<li><a href="/registration/regStud">Register Form</a></li>
+{% endblock %}
+
+{%block content%}
+<content>
+  <div class="container" style="min-height:500px;">
+    <!---search form---->
+    <div style="position: relative;width:100%;height: 80px; left: 0%;">
+      <!---<div style="position: absolute; left:2%; width: 15%;top: 30px;">
+	<a href="/registration/regStud" class="btn btn-link">
+	  <span class="glyphicon glyphicon-user"></span> Register New Student
+	</a>
+      </div>--->
+      <div ><!---style="position: absolute; left:30%; width: 60%;top: 20px;"-->
+	{% include "registration/searchstud_form.html" %}
+      </div>
+    </div>
+  
+    <div style="width:100%;top: 100px;left:5%; padding: 10px;">
+      <div id="stud_list">
+	{% include "registration/student_table.html" %}
+      </div>
+    </div>
+   </div>
+</content>
+{%endblock%}
+
+

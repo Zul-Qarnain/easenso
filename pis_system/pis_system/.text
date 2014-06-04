@@ -1,0 +1,56 @@
+object 
+	- study the api
+	- the rubostness of the api
+	- 
+	
+	
+
+into 
+	- ano ung mapping 
+	- anong important
+	- search another mapping api's
+	- importants ang mapping
+		site 
+			like disaster
+			quick analisyze data
+	- bakit specific ang google map
+	- database
+	- last parghrap mention project
+		site the importants of mapping
+		bakit kailangan evaluate
+		
+statement of the problem
+	to create and evaluate a mapping services using google map api.., 
+
+	gather data
+	to study the structure of the google map api
+	to incooperate python, and django framework with google map api
+	design a mapping services data stracture for postgresql
+	implement the mapping service using real world data
+	test and evaluate a performance of the mapping services
+	survey experement
+
+scope 
+	sabhin kung ano functionality ng services
+	maka download sya ng data
+	limitiation walang path finding
+
+significance 
+	read the importance of mapping..
+	ayaw mag read ng mga tao data.. mas maganda ung visualization
+	example din ang weather broadcasting... 
+
+related litirature
+	kadalasan
+	like
+	algorithm 
+
+chapter
+	conceptual framework, reasearch methodology, or theoritical frame work
+	gaunt chart
+	plan
+	exeperement
+	interview
+
+
+	

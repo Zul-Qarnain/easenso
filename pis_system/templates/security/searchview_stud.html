@@ -1,0 +1,23 @@
+{% extends './registration/base.html' %}
+
+{%block content%}
+   <!---search form---->
+   <div style="position: relative;width:100%;height: 80px; left: 0%; border-bottom: 1px solid rgb(200,200,200);">
+     <div style="position: absolute; left:2%; width: 15%;top: 30px;">
+       <a href="registration/regNewStud" class="btn btn-link">
+	 <span class="glyphicon glyphicon-user"></span> Register New Student
+       </a>
+     </div>
+     <div style="position: absolute; left:30%; width: 60%;top: 20px;">
+       {% include "registration/searchstud_form.html" %}
+     </div>
+   </div>
+  
+   <div style="position: absolute;width:90%;top: 100px;left:5%">
+     <div id="stud_list">
+       {% include "registration/reg_stud_list.html" %}
+     </div>
+   </div>
+{%endblock%}
+
+

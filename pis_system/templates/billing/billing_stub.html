@@ -1,0 +1,21 @@
+<table  id="stud_info" style="background:rgba(255,0,0,.1)">
+  <tr style="height:100px"> 
+    <td>
+
+        <img src="{{MEDIA_URL}}{{student.image_path}}" width="100px" height="100px">
+        {{student.image_path}}
+    </td>
+    <td> 
+      <ul  class="plate" type="none">
+          {% if student %}
+          <li><strong>{{student.lastname}}{{', '}} {{student.firstname}} {{' '}} {{student.mi}}</strong></li>
+          <li>{{student.studentID}}</li>
+          <li>{{student.image_path}}</li>
+          <li>Academic Status: OK</li>
+          <li>Billing Profile: PAYING</li>
+          <input type="hidden" name="student_id" value="{{student.studentID}}"/>
+          {% endif %}
+      </ul>
+    </td>
+  </tr>
+</table>   

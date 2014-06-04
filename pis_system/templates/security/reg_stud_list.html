@@ -1,0 +1,34 @@
+{% if students %}
+   <table class="table table-condensed table-hover">
+      <caption><font color="#0747E4"> Showing {{total}} of {{size}} result(s)... </font></caption>
+      <thead>
+	<tr>
+          <th>ID</th>
+          <th>Name</th>
+	  <th>Yr-Level</th>
+	  <th>Gender</th>
+	  <th>Date Admitted</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for student in students %}
+        <tr>
+          <td>{{ student.studentID }}</td>
+          <td>
+	    <a id="{{ student.studentID }}" 
+	       href="javascript:showSIaG({{ student.studentID }})">
+              {{ student.lastname|upper }} &nbsp;
+              {{ student.firstname}} &nbsp;
+              {{ student.mi}} &nbsp;
+	    </a>
+          </td>
+          <td>{{ student.get_year_level_display }}</td>
+	  <td>{{ student.get_gender_display }}</td>
+	  <td>{{ student.date_admintted}}</td>
+        </tr>
+	{% endfor %}
+      </tbody>
+   </table>
+{% else %}
+   <p><strong>No Results Found!</strong><p>
+{% endif %}

@@ -1,0 +1,22 @@
+from django.contrib import admin
+from pis_system.models import *
+
+admin.site.register(Employee)
+admin.site.register(StudentPrivilege)
+admin.site.register(Subject)
+admin.site.register(Student)
+admin.site.register(BillItems)
+admin.site.register(AssignBillItem)
+admin.site.register(BillAccount)
+admin.site.register(Transaction)
+admin.site.register(TransactionBreakdown)
+admin.site.register(Packages)
+admin.site.register(BillPackage)
+admin.site.register(OneOffTransaction)
+admin.site.register(Section)
+admin.site.register(StudentSection)
+admin.site.register(AdviserSection)
+admin.site.register(StudentSubjects)
+admin.site.register(StudentGrade)
+admin.site.register(CharacterRate)
+admin.site.register(Attendance)

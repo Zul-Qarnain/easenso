@@ -1,0 +1,286 @@
+{% extends './registration/base.html' %}
+
+{%block content%}
+
+<script type="text/javascript">
+  $(function(){
+  $("#id_date_admitted").datepicker({
+      dateFormat: 'yy-mm-dd'
+  });
+  $("#id_date_of_birth").datepicker({
+      dateFormat: 'yy-mm-dd'
+  });
+  });
+</script>
+
+   <!---register employee form---->
+<content>
+
+
+  <div class="container">
+    <p
+   {% if status and status == 'inserted' %}
+       class="alert alert-success"><b>New Student</b> Succesfully inserted
+   {% elif status and status == 'updated' %}
+      class="alert alert-success">Student Info succefully updated
+   {% elif status and status == 'exists'%}
+      class="alert alert-danger">Student named '{{fname}}&nbsp;{{lname}}' already exists in the database
+   {% endif %}
+      </p>
+    
+    <h2>Student Registration 
+      <small>
+      {% if action == "edit" %}
+         Update Student Profile
+      {% else %}
+         Register New Student
+      {% endif %}
+      </small>
+    </h2>
+   <div style="width:100%; top: 100px; left:5%; padding: 10px;">
+     <form class="form-horizontal" id="register_employee" action="/registration/regStud/" method="post" enctype="multipart/form-data">{% csrf_token %}
+       {% if errors %}
+         <div class="alert alert-danger">
+	   {{ errors }}
+	 </div>
+       {% endif %}
+      <input type="hidden" name="action" value="{{action}}">
+      <div class="form-group">
+	<label class="col-sm-2">Student ID</label>
+	<div class="col-sm-7">
+	  {{ form.studentID }}
+	</div>
+	<div class="col-sm-3">
+	  <a href="#" id="gen_stud_id_btn" class="btn btn-primary">Generate ID</a>
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Firstname</label>
+	<div class="col-sm-7">
+	  {{ form.firstname }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Middle Initial</label>
+	<div class="col-sm-7">
+	  {{ form.mi }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Lastname</label>
+	<div class="col-sm-7">
+	  {{ form.lastname }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Gender</label>
+	<div class="col-sm-7">
+	  {{ form.gender }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Year Level</label>
+	<div class="col-sm-7">
+	  {{ form.year_level }}
+	</div>
+      </div>
+      
+      <div class="form-group">
+	<label class="col-sm-2">Date Admitted</label>
+	<div class="col-sm-7">
+	  {{ form.date_admitted }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Date of Birth</label>
+	<div class="col-sm-7">
+	  {{ form.date_of_birth }}
+	</div>
+      </div>
+
+      
+      <div class="form-group">
+	<label class="col-sm-2">Father's Name</label>
+	<div class="col-sm-7">
+	  {{ form.father_name }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Father's Occupation</label>
+	<div class="col-sm-7">
+	  {{ form.father_occ }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Mother's Name</label>
+	<div class="col-sm-7">
+	  {{ form.mother_name }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Mother's Occupation</label>
+	<div class="col-sm-7">
+	  {{ form.mother_occ }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Last School Attended</label>
+	<div class="col-sm-7">
+	  {{ form.last_school_att }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Last School Attended Address</label>
+	<div class="col-sm-7">
+	  {{ form.last_school_att_add }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Academic Status</label>
+	<div class="col-sm-7">
+	  {{ form.acad_status }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Profile Picture</label>
+	<div class="col-sm-7">
+	  {{ form.image_path }}
+	</div>
+      </div>
+
+      <div class="form-group">
+	<label class="col-sm-2">Privilege/Scholarship</label>
+	<div class="col-sm-7">
+	  {{ form.priv }}
+	</div>
+      </div>
+
+          
+      <div class="form-group">
+	<div class="col-sm-8 col-sm-offset-2">
+	  <button type="submit" name="submit" class="btn btn-primary" value="reg_bill">Register and BIll for Enrolment</button>
+	  {% if action == "edit" %}
+	  <button type="submit" name="submit" class="btn btn-success" value="save">Save Profile Only</button>
+	  {% endif %}
+	</div>
+      </div>
+
+      <!----
+      <table style="margin:"  class="table table-responsive table-striped">
+      	<thead>
+	      	<tr>
+	      	  <th colspan="2" class="h4" >Add Student:</th>
+	      	</tr>
+      	</thead>
+
+      	<tr>
+      	  <td>Student ID:</td>
+      	  <td>
+	    <input type="hidden" name="action" value="{{action}}">
+	    {{ form.studentID }} &nbsp;
+	    
+	  </td>
+      	</tr>
+      	<tr>
+      	  <td>First Name:</td>
+      	  <td>
+	    {{ form.firstname }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Middle Initial:</td>
+      	  <td>
+	    {{ form.mi }}
+	  </td>
+      	</tr>
+      	<tr>
+      	  <td>Last Name:</td>
+      	  <td>{{ form.lastname }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Gender:</td>
+      	  <td>{{ form.gender }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Date of Birth:</td>
+      	  <td>{{ form.date_of_birth }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Date Admitted:</td>
+      	  <td>{{ form.date_admitted }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Father's Name:</td>
+      	  <td>{{ form.father_name }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Mother's Name:</td>
+      	  <td>{{ form.mother_name }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Father's Occupation:</td>
+      	  <td>{{ form.father_occ }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Mother's Occupation:</td>
+      	  <td>{{ form.mother_occ }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Last School Attended:</td>
+      	  <td>{{ form.last_school_att }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Last School Address:</td>
+      	  <td>{{ form.last_school_att_add }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Academic Status:</td>
+      	  <td>{{ form.acad_status }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Image:</td>
+      	  <td>
+	    
+	    {{ form.image_path }}
+	  </td>
+      	</tr>
+      	<tr>
+      	  <td>Privilege/Scholarship:</td>
+      	  <td>{{ form.priv }}</td>
+      	</tr>
+      	<tr>
+      	  <td>Year Level:</td>
+      	  <td>{{ form.year_level }}</td>
+      	</tr>
+      	<tr>
+      	  <td></td>
+      	  <td>
+			<!--span class="input-group-btn">
+      		  <button class="btn btn-success" type="submit">
+			    <span class="glyphicon glyphicon-save"></span>
+      		  </button>
+    		</span
+      	  </td>
+      	</tr>
+      </table>
+      <div style="text-align:right;">
+	<button type="submit" class="btn btn-primary" name="submit" value="1" style="width:250px;">Save and Bill for Enrollment</button>&nbsp;
+	<button type="submit" class="btn btn-success" name="submit" value="2" style="width:250px;">Save Info Only</button>
+      </div>--->
+     </form>
+   </div>
+  </div>
+</content>
+{%endblock%}

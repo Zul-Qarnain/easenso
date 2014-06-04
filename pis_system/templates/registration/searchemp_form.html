@@ -1,0 +1,40 @@
+<!---javascript:searchStud('name-search-form')--->
+<form class="form-search" id="name-search-form" action="{{sat}}" method="POST">{% csrf_token %}
+  <div class="input-group">
+
+    <div class="input-group-addon">
+      <select name="e_opt" id="name-search" type="radio" onchange="searchOption(this.value)">
+	{% if option == "emp_id" %}
+	   <option value="emp_id" selected="selected">ID
+	{% else %}
+	   <option value="emp_id">ID	     
+	{% endif %}
+
+    {% if option == "first_name" %}
+	   <option value="emp_id" selected="selected">First Name
+	{% else %}
+	   <option value="first_name">First Name	     
+	{% endif %}	     
+	     
+        {% if option == "last_name" %}
+	   <option value="last_name" selected="selected">Last Name
+	{% else %}
+	   <option value="last_name">Last Name
+	{% endif %}	     
+	
+      </select>
+    </div>
+    <input type="text" id="search-text" name="search" class="form-control" value="{{ search }}" placeholder="Enter Name">
+    <select id="section-list" style="display:none;" class="form-control">
+      <option value="first_name">First Name</option>
+      <option value="last_name">Last Name</option>
+      <option value="section">Section</option>
+    </select>
+    
+    <span class="input-group-btn">
+      <button class="btn btn-success" type="submit">
+	<span class="glyphicon glyphicon-search"></span>
+      </button>
+    </span>
+  </div>
+</form>
