@@ -1,0 +1,400 @@
+
+@import url('bootstrap.css');
+
+
+html, body
+{
+	 height: 100%;
+    margin:0;
+    padding:0;
+
+}
+
+#main-body
+{
+	background: -webkit-linear-gradient(0deg,  #FFFAFA, #01ACD8); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(0deg,  #FFFAFA, #01ACD8); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(0deg,  #FFFAFA, #01ACD8); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(0deg,  #FFFAFA, #01ACD8); /* Standard syntax (must be last) */
+  background-repeat: no-repeat;
+  background-size: 100%;
+ 	padding:10px;
+ 	padding-bottom:60px;
+
+}
+
+#wrapper
+{
+	 min-height:100%;
+	position:relative;
+
+
+}
+#main-logo
+{
+	background-image: url(../images/final3.png);
+	background-position: center;
+	background-size: 45%;
+	background-repeat: no-repeat;
+	
+
+}
+#main.container
+{
+	width: 50%;
+	
+	
+	
+
+}
+
+#search {
+  display: block;
+  width: 100%;
+  height: 70px;
+
+  margin-top: 5%;
+  margin-bottom: 2%;
+
+  line-height: 3;
+  color: #555;
+
+  font-size: 24px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, .075);
+  background-image: none;
+  border: 0px solid #ccc;
+  border-radius: 0px;
+  -webkit-box-shadow: inset 0 0px 0px rgba(1, 3, 2, .075);
+          box-shadow: inset 0 0px 0px rgba(1, 3, 2, .075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.btn-default {
+  color: #428bca;
+  background-color: #fff;
+  border-color: #ccc;
+  border-radius: 0px;
+  width: 100%;
+  height: 20%;
+  font-weight: bold;
+
+  
+}
+
+
+
+
+
+.header
+
+{
+	margin-top: 30%;	
+	text-align: center;
+	letter-spacing: 7px;
+	line-height: 40px;
+	font-size: 35px;
+	color: white;
+	text-shadow: 0 1px 2px black;
+
+	font-family: gisha;
+}
+
+#sub-tagline
+{
+
+	color: white;
+	text-shadow: 0 1px 2px black;
+	font-family: gisha;
+
+}
+
+#background
+{
+
+}
+
+
+
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+  color: white;
+  background-color: #428BCA;
+  border-color: #adadad;
+  font-weight: bold;
+}
+
+
+.jumbotron .container-fluid {
+  height: 100%;
+  
+  
+}
+
+#LOGO {
+
+	
+	background-size: 100%;
+	background-position: center;
+	height: 100%;
+	width: 100%;
+	
+	
+	background-color: transparent;
+	
+	
+}
+
+#or
+{
+	text-align: center;
+	color: green;
+}
+
+#dollar
+{
+	margin-bottom: 3px;
+	text-align: center;
+}
+
+
+#early
+{
+	margin-top: 2px;
+	width: 70%;
+	height: 70px;
+	line-height:  50px;
+	letter-spacing: 2px;
+	border-radius: 0px;
+
+	font-family: Century Gothic;
+	text-shadow: 0 1px 3px  #1E1D1D;
+	border: 0px;
+	box-shadow-right: 0 0px 4px 0px #1E1D1D;
+	
+}
+
+
+
+
+
+#username
+{
+	border-radius: 0px;
+
+}
+
+#password
+{
+	margin-top: 0px;
+	border-radius: 0px;
+}
+
+#login-button
+{
+	margin-top: 0px;
+	border-radius: 0px;
+	width: 100%;
+	margin-bottom: 0px;
+
+
+}
+
+#log-in-header
+{
+	color: white;
+	background-color: #428BCA;
+	height: 30px;
+	
+	font-weight: bold;
+	text-align: left;
+	
+
+}
+
+#header-greeting
+{
+	margin-left: 7px;
+	padding-top: 4px;
+}
+
+#login-button
+{
+	height: 40px;
+}
+
+#signup
+{
+position: relative;
+
+
+}
+
+#sign-up-logo
+{
+	background-image: url(../images/favico.png);
+	background-size: 20%;
+	background-repeat: no-repeat;
+	height: 200px;
+	width: 100%;	
+	
+
+
+
+}
+
+#signup-header
+{
+	position: relative;
+	margin-top: 0px;
+	color: white;
+	font-family: gisha;
+	border-radius:0px;
+	border-color: transparent;
+	background-color: #FA8800;
+	box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+	margin-bottom: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	height: 60px; 
+	font-size: 40px;
+	text-align: left;
+	padding-left: 10px;
+	text-shadow: 0 1px 3px  grey;
+	letter-spacing: 1px;
+}
+
+#first-name, #middle-name, #last-name,
+#signup-username, #signup-password, 
+#password-confirm, #email-address,
+#mobile-num, #city, #province
+{
+	font-family: gisha;
+	letter-spacing: 1px;
+	border-color: transparent;
+	border-radius: 0px;
+	margin-bottom: 8px;
+	background-color: rgba(250, 250, 250, 0.3);
+	/*color:white;*/ /** edited **/
+	box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+	font-size: 15px
+}
+
+#gender
+{
+	padding-left:10px;	
+	padding-top: 6px;
+	font-weight: bolder;
+	margin-left: 0px;
+	background-color: rgba(0, 0, 300, 0.3);
+	border-radius: 0px;
+	margin-bottom: 8px;
+	width: 100%;
+	color:white;
+	box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+	height: 100%;
+}
+
+ #captcha
+ {
+ 	border-radius: 0px;
+ 	margin-top: 3px;
+
+ }
+
+#signup-button
+{
+	width: 100%;
+	height: 40px;
+	border-color: transparent;
+	border-radius: 0px;
+	margin-bottom: 10%;
+	color: black;
+}
+#signup-button-header
+{
+	margin-top: 4px;
+}
+
+#male1, #female
+{
+	margin-right: 40px;
+}
+
+
+.btn-warning {
+    color: #FFF;
+    background-color: rgba(240, 173, 78, 0.26);
+    border-color: #EEA236;
+}
+
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning.active,
+.open .dropdown-toggle.btn-warning {
+  color: #fff;
+  background-color: rgba(189, 140, 70, 0.3);
+  border-color: #d58512;
+}
+
+#btn-background
+{
+	background-color: rgba(250, 250, 250, 0.1);
+	background-position: center;
+	height: 73px;
+	width: 100%;
+	border: white;
+	border-radius: 40px;
+	color : white;
+	width: 70%;
+	height: 70px;
+	line-height:  50px;
+	letter-spacing: 2px;
+	border-radius: 0px;
+	font-size: 50px;
+	font-family: gisha;
+	text-shadow: 0 1px 3px  #1E1D1D;
+	border: 0px;
+	box-shadow-right: 0 0px 4px 0px #1E1D1D;
+	
+}
+#test:hover
+
+{
+	text-decoration: none;
+
+}
+
+.footer
+{
+	text-align: right;
+	
+	background-color: transparent;
+	color: white;
+	text-shadow: 0 1px 2px black;
+	font-weight: bold;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 20px;
+	margin-top: 10%;
+
+
+}
+#new
+{
+	margin-top: 70%;
+	margin-bottom: 40px;
+	color: white;
+	position: relative;
+
+
+
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+
+<script src= "file:///C:/Users/HSNDN/Desktop/E-Asenso//assets/js/bootstrap.min.js"></script>
+
+<script src= "file:///C:/Users/HSNDN/Desktop/E-Asenso//assets/js/bootstrap.js"></script>
+	
+<script src= "file:///C:/Users/HSNDN/Desktop/E-Asenso//assets/js/jquery.min.js"></script>
+
+<link rel="stylesheet" href="file:///C:/Users/HSNDN/Desktop/E-Asenso//assets/css/style.css" type="text/css">
+
+
+
+</head>
+
+<body>
+
+	<div id="login" class="container" align="center">
+
+			<input id="username" type="text" class="form-control" placeholder="Username">
+			
+			<input id="username" type="text" class="form-control" placeholder="Username">
+
+			
+
+
+
+		
+	</div>
+</body>
+
+
+
+</html>
+
+<script src= "file:///C:/Users/HSNDN/Desktop/E-Asenso//assets/js/bootstrap.min.js"></script>
+
+<script src= "file:///C:/Users/HSNDN/Desktop/E-Asenso//assets/js/bootstrap.js"></script>
+	
+<script src= "file:///C:/Users/HSNDN/Desktop/E-Asenso//assets/js/jquery.min.js"></script>

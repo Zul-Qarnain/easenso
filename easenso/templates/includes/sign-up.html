@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ system_name }} {% endblock title %}
+
+{% block extra_css %}
+	<link rel="stylesheet" href="/static/jquery-ui-1.10.4/css/ui-lightness/jquery-ui-1.10.4.css" >
+{% endblock extra_css %}
+
+{% block content %}
+	<div id="sign-up" class="container" align="center">
+		<div id="sign-up-logo"> </div>
+		<div id="signup-header" class="panel panel-warning"> Sign-up to e-asenso!</div>
+		<form action="/signup/" method="post">
+		{% csrf_token %}
+			{{ form.firstname }}
+			{{ form.lastname }}
+
+						
+			<div id="gender" class="container" align="left">	
+				<label class="radio-inline">
+				  <input type="radio" name="gender" value="M" checked> Male
+				</label>
+				<label  class="radio-inline">
+				  <input type="radio" name="gender" value="F"> Female
+				</label>
+			</div>
+
+			{{ form.username }}
+			{{ form.password }}
+			{{ form.confirm }}
+			{{ form.email }}
+			{{ form.date_of_birth }}
+			{{ form.mobile }}
+			{{ form.city }}
+			{{ form.province }}
+
+			{# enter captcha code here. #}
+			{# <input id="captcha" type="text" class="form-control" placeholder="Enter CODE"> #}
+			{{ captcha.captcha }}
+
+			<button type="submit" id="signup-button" class="btn btn-warning">
+				<h4 id="signup-button-header">SIGN ME UP!</H4>
+			</button>
+		</form>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block extra_js %}
+	<script src="/static/jquery-ui-1.10.4/js/jquery-ui-1.10.4.js"></script>
+	
+	<script>
+		$(document).ready(function() {
+		    $('.datepicker').datepicker();
+		});
+	</script>
+
+shareimprove this answer
+{% endblock extra_js %}
